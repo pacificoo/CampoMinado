@@ -12,8 +12,8 @@ class Interacao:
 
     def Tela_pause():
         '''função em que o usuario pode escolher entre as seguintes opções: Voltar
-para o jogo(1), salvar o jogo em outro arquivo(2), voltar para o menu principal(3) e
-sair do jogo(4).
+        para o jogo(1), salvar o jogo em outro arquivo(2), voltar para o menu principal(3) e
+        sair do jogo(4).
         none->none'''
         print('\n--------Tela de Pause----------\n')
         print('Para voltar para o jogo aperte 1\nPara recarregar um jogo já salvo aperte 2\nPara criar um novo jogo aperte 3\nPara voltar ao menu inicial aperte 4')
@@ -29,9 +29,9 @@ sair do jogo(4).
             Interacao.novo_jogo()
         if int(num)==4:
             Interacao.menu_Principal()
-     
+  
     def possibilidades_pos():
-    ''' funcao que gera todas as possíveis de jogadas
+        ''' funcao que gera todas as possíveis de jogadas
         none ->list'''
         combinacao= []
         for i in range(Campo.tamanho()): #confirmar essa 'chamada'
@@ -103,6 +103,12 @@ sair do jogo(4).
             pos = Interacao.posicao()
             Log.escrever_jogo(arquivo,pos)
             
+            jogadas_arquivo = open(arquivo +'.txt')
+            jogadas = jogadas_arquivo.readlines()
+            jogadas_arquivo.close()
+            
+            for jogada in jogadas:
+                situ, venceu = 
             situ, venceu = Campo.mascara(pos)
             
             if venceu:
