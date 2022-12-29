@@ -6,7 +6,6 @@ class interacao:
     def __init__(self):
         pass
         
-
     def regras(self):
         ''' funcao que printa as regras do jogo para usario caso seja pedido
         none->none'''
@@ -19,7 +18,7 @@ class interacao:
 para o jogo(1), salvar o jogo em outro arquivo(2), voltar para o menu principal(3) e
 sair do jogo(4).
         interacao->none'''
-        print('--------Tela de Pause----------')
+        print('\n--------Tela de Pause----------\n')
         print('Para voltar para o jogo aperte 1\nPara recarregar um jogo aperte 2\nPara voltar ao menu inicial aperte 3\nPara sair do jogo aperte 4')
 
         while True:
@@ -28,8 +27,6 @@ sair do jogo(4).
                 break
             print('O numero não é válido ou o valor digitado não é um número')
    
-        if int(num) == 1:
-            self.retorno()
         if int(num) == 2:
             self.carregar_jogo()
         if int(num)==3:
@@ -41,19 +38,13 @@ sair do jogo(4).
 
     def posicao():
         '''função que pede a ao usuário posicao
-        none->none'''
+        none->int,int'''
         posicao = input('Digite a posição escolhida separada por vírgulas')
         pos1 = int(posicao[0])
         pos2 = int(posicao[2])
 
         return pos1, pos2
-
-
-    def retorno():
-        '''funcao que retorna o jogo em andamento
-        none->none'''
-        pass
-
+  
     def salvar(arquivo):
         '''funcao que pergunta ao usuário se ele deseja salvar ou não o jogo
         str->none'''
@@ -63,12 +54,18 @@ sair do jogo(4).
         '''funçao que seleciona um jogo salvo anteriormente
         str->none'''
         nome = input('Digite o nome do jogo que deseja abrir com a sua respectiva extensao')
-
     
     def novo_jogo():
         '''funcao que inicia um novo jogo
         none->none'''
         pass
+    
+    def rodar_jogo(self):
+        '''funcao que roda o jogo para o usuário
+        interacao->none'''
+        while True:
+            pos = self.posicao()
+            
 
     def menu_Principal(self):
         '''funcao que escolhe entre as seguintes opções: Novo Jogo (1), carregar jogo
