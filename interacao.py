@@ -89,7 +89,8 @@ sair do jogo(4).
         situ = True
         while situ:
             pos = Interacao.posicao()
-            Log.
+            Log.escrever_jogo(arquivo,pos)
+            
             situ, venceu = Campo.mascara(pos)
             
             if venceu:
