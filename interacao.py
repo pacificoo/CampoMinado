@@ -18,7 +18,7 @@ class interacao:
         '''função em que o usuario pode escolher entre as seguintes opções: Voltar
 para o jogo(1), salvar o jogo em outro arquivo(2), voltar para o menu principal(3) e
 sair do jogo(4).
-        none->none'''
+        interacao->none'''
         print('--------Tela de Pause----------')
         print('Para voltar para o jogo aperte 1\nPara recarregar um jogo aperte 2\nPara voltar ao menu inicial aperte 3\nPara sair do jogo aperte 4')
 
@@ -56,7 +56,7 @@ sair do jogo(4).
 
     def salvar(arquivo):
         '''funcao que pergunta ao usuário se ele deseja salvar ou não o jogo
-        none->none'''
+        str->none'''
         pass
     
     def carregar_jogo(arquivo):
