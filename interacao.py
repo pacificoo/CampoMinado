@@ -29,27 +29,39 @@ sair do jogo(4).
             Interacao.novo_jogo()
         if int(num)==4:
             Interacao.menu_Principal()
-    
-        #perguntar para o andre se precisa raise erro
+     
+    def possibilidades_pos():
+    ''' funcao que gera todas as possíveis de jogadas
+        none ->list'''
+        combinacao= []
+        for i in range(Campo.tamanho()): #confirmar essa 'chamada'
+                for j in range(Campo.tamanho()):
+                combinacao.append([i,j])            
+        return combinacao
 
     def posicao():
         '''função que pede a ao usuário posicao
         none->int,int'''
         pos = input('Digite a posição escolhida separada por vírgulas')
+        if pos in 'abcdefghijklmnopq':
+            raise NumError
+        
         posicao = pos.split(',')
         pos1 = posicao[0]
         pos2 = posicao[1]
-
+        
+        if [pos1,pos2] not in possibilicades_pos():
+            raise PosError
         return (pos1, pos2)
-    
+
     def lista_de_jogos():
         '''Retorna a lista de todos os jogos salvos'''
         jogos_arquivo = open("LOG\Lista de jogos.txt")
         jogos = jogos_arquivo.readlines()
         jogos_arquivo.close()
         return jogos
-        
-    
+   
+
     def carregar_jogo():
         '''funçao que seleciona um jogo salvo anteriormente
         str->none'''
@@ -132,6 +144,7 @@ class NumError(Exception):
     pass
 
 
-    
+class PosError(Exception):
+    pass
 
         
