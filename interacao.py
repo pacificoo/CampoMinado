@@ -35,9 +35,10 @@ sair do jogo(4).
     def posicao():
         '''função que pede a ao usuário posicao
         none->int,int'''
-        posicao = input('Digite a posição escolhida separada por vírgulas')
-        pos1 = int(posicao[0])
-        pos2 = int(posicao[2])
+        pos = input('Digite a posição escolhida separada por vírgulas')
+        posicao = pos.split(',')
+        pos1 = posicao[0]
+        pos2 = posicao[1]
 
         return pos1, pos2
     
