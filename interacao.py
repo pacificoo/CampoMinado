@@ -1,7 +1,7 @@
 from analise import Analise
 #acho que preciso importar do log tbm 
 
-class interacao:
+class Interacao:
         
     def regras():
         ''' funcao que printa as regras do jogo para usario caso seja pedido
@@ -16,20 +16,19 @@ para o jogo(1), salvar o jogo em outro arquivo(2), voltar para o menu principal(
 sair do jogo(4).
         none->none'''
         print('\n--------Tela de Pause----------\n')
-        print('Para voltar para o jogo aperte 1\nPara recarregar um jogo aperte 2\nPara voltar ao menu inicial aperte 3\nPara sair do jogo aperte 4')
+        print('Para voltar para o jogo aperte 1\nPara recarregar um jogo já salvo aperte 2\nPara criar um novo jogo aperte 3\nPara voltar ao menu inicial aperte 4')
 
         while True:
             num = input('Digite o número escolhido ')
             if not( len(num)!=1 or num[0] not in '1234'):
                 break
             print('O numero não é válido ou o valor digitado não é um número')
-   
         if int(num) == 2:
-            interacao.carregar_jogo()
-        if int(num)==3:
-            interacao.menu_Principal()
-        if int(num) == 4:
-            self.salvar()
+            Interacao.carregar_jogo()
+        if int(num) == 3:
+            Interacao.novo_jogo()
+        if int(num)==4:
+            Interacao.menu_Principal()
     
         #perguntar para o andre se precisa raise erro
 
@@ -41,11 +40,6 @@ sair do jogo(4).
         pos2 = int(posicao[2])
 
         return pos1, pos2
-  
-    def salvar(arquivo):
-        '''funcao que pergunta ao usuário se ele deseja salvar ou não o jogo
-        str->none'''
-        pass
     
     def carregar_jogo(arquivo):
         '''funçao que seleciona um jogo salvo anteriormente
@@ -61,13 +55,13 @@ sair do jogo(4).
         '''funcao que roda o jogo para o usuário
         interacao->none'''
         while True:
-            pos = interacao.posicao()
+            pos = Interacao.posicao()
             
 
     def menu_Principal():
         '''funcao que escolhe entre as seguintes opções: Novo Jogo (1), carregar jogo
         (2), estatísticas (3), regras dos jogo (4), e sair do jogo (5)
-        interacao->none'''
+        Interacao->none'''
 
         while True:
             print('\n--------Menu Principal----------\n')
@@ -80,15 +74,15 @@ sair do jogo(4).
                 
                 
             if int(num) == 1:
-                interacao.novo_jogo()
+                Interacao.novo_jogo()
             if int(num) == 2:
-                interacao.carregar_jogo()
+                Interacao.carregar_jogo()
             if int(num)==3:
-                interacao.estatisticas()
+                Interacao.estatisticas()
             if int(num) == 4:
-                interacao.regras()
+                Interacao.regras()
             if int(num) ==5:
-                break  
+                break
 
     def estatisticas(dados):
         '''funcao que printa para o usuario as estatisticas dos jogos anteriores'''
