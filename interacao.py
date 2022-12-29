@@ -1,5 +1,5 @@
 from analise import Analise
-#acho que preciso importar do log tbm 
+from log import Log
 
 class Interacao:
         
@@ -40,23 +40,60 @@ sair do jogo(4).
         pos1 = posicao[0]
         pos2 = posicao[1]
 
-        return pos1, pos2
+        return (pos1, pos2)
     
-    def carregar_jogo(arquivo):
+    def lista_de_jogos():
+        '''Retorna a lista de todos os jogos salvos'''
+        jogos_arquivo = open("LOG\Lista de jogos.txt")
+        jogos = jogos_arquivo.readlines()
+        jogos_arquivo.close()
+        return jogos
+        
+    
+    def carregar_jogo():
         '''funçao que seleciona um jogo salvo anteriormente
         str->none'''
-        nome = input('Digite o nome do jogo que deseja abrir com a sua respectiva extensao')
+        jogos = Interacao.lista_de_jogos()
+        
+        if len(jogos) > 0:
+            
+            for i in range(len(jogos)):
+                print(i,jogos[i])
+            
+            jogo = input('\nDigite o número do jogo que deseja carregar dentre a lista acima: ')
+            Interacao.rodar_jogo(jogos[jogo])
+        else:
+            print('Não há jogos salvos')
     
     def novo_jogo():
         '''funcao que inicia um novo jogo
         none->none'''
-        pass
+        jogos = Interacao.lista_de_jogos()
+        while True:
+            arquivo = input('Digite o nome do novo jogo: ')
+            if arquivo in jogos:
+                print('Este nome já foi usado pra outro jogo. Digite outro')
+            else:
+                jogos_arquivo = open("LOG\Lista de jogos.txt", 'a')
+                jogos_arquivo.write(arquivo + '\n')
+                break
+        
+        Interacao.rodar_jogo(arquivo)
+        
+        
     
-    def rodar_jogo():
+    def rodar_jogo(arquivo):
         '''funcao que roda o jogo para o usuário
         interacao->none'''
-        while True:
+        
+        situ = True
+        while situ:
             pos = Interacao.posicao()
+            Log.
+            situ, venceu = Campo.mascara(pos)
+            
+            if venceu:
+                break
             
 
     def menu_Principal():
