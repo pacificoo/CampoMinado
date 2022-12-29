@@ -2,22 +2,19 @@ from analise import Analise
 #acho que preciso importar do log tbm 
 
 class interacao:
-
-    def __init__(self):
-        pass
         
-    def regras(self):
+    def regras():
         ''' funcao que printa as regras do jogo para usario caso seja pedido
         none->none'''
         print('O objetivo do jogo é descobrir as casas vazias. A cada casa vazia descoberta, o número de bombas ao seu redor é revelado')
         print('O jogador perde se a casa escolhida conter uma bomba')
     
 
-    def Tela_pause(self):
+    def Tela_pause():
         '''função em que o usuario pode escolher entre as seguintes opções: Voltar
 para o jogo(1), salvar o jogo em outro arquivo(2), voltar para o menu principal(3) e
 sair do jogo(4).
-        interacao->none'''
+        none->none'''
         print('\n--------Tela de Pause----------\n')
         print('Para voltar para o jogo aperte 1\nPara recarregar um jogo aperte 2\nPara voltar ao menu inicial aperte 3\nPara sair do jogo aperte 4')
 
@@ -28,9 +25,9 @@ sair do jogo(4).
             print('O numero não é válido ou o valor digitado não é um número')
    
         if int(num) == 2:
-            self.carregar_jogo()
+            interacao.carregar_jogo()
         if int(num)==3:
-            self.menu_Principal()
+            interacao.menu_Principal()
         if int(num) == 4:
             self.salvar()
     
@@ -60,14 +57,14 @@ sair do jogo(4).
         none->none'''
         pass
     
-    def rodar_jogo(self):
+    def rodar_jogo():
         '''funcao que roda o jogo para o usuário
         interacao->none'''
         while True:
-            pos = self.posicao()
+            pos = interacao.posicao()
             
 
-    def menu_Principal(self):
+    def menu_Principal():
         '''funcao que escolhe entre as seguintes opções: Novo Jogo (1), carregar jogo
         (2), estatísticas (3), regras dos jogo (4), e sair do jogo (5)
         interacao->none'''
@@ -83,13 +80,13 @@ sair do jogo(4).
                 
                 
             if int(num) == 1:
-                self.novo_jogo()
+                interacao.novo_jogo()
             if int(num) == 2:
-                self.carregar_jogo()
+                interacao.carregar_jogo()
             if int(num)==3:
-                self.estatisticas()
+                interacao.estatisticas()
             if int(num) == 4:
-                self.regras()
+                interacao.regras()
             if int(num) ==5:
                 break  
 
