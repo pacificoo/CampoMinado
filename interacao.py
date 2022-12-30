@@ -30,30 +30,27 @@ class Interacao:
             Interacao.novo_jogo()
         if int(num)==4:
             Interacao.menu_Principal()
-  
-    def possibilidades_pos():
-        ''' funcao que gera todas as possíveis de jogadas
-        none ->list'''
-        combinacao= []
-        for i in range(Campo.tamanho()): #confirmar essa 'chamada'
-                for j in range(Campo.tamanho()):
-                    combinacao.append([i,j])            
-        return combinacao
 
-    def posicao():
+    def posicao(lado):
         '''função que pede a ao usuário posicao
         none->int,int'''
-        pos = input('Digite a posição escolhida separada por vírgulas')
-        if pos in 'abcdefghijklmnopq':
-            raise NumError
-        
-        posicao = pos.split(',')
-        pos1 = posicao[0]
-        pos2 = posicao[1]
-        
-        if [pos1,pos2] not in possibilicades_pos():
-            raise PosError
-        return (pos1, pos2)
+        while True:
+            
+            try:
+                pos = input('''Digite a posição escolhida separada por x no tipo LINHAxCOLUNA.
+                            \nOs valores para linha e coluna devem estar entre 0 e tamanho do campo-1: ''')
+                posicao = pos.split('x')
+                
+                pos1 = int(posicao[0])
+                pos2 = int(posicao[1])
+                
+                if pos1 > lado-1 or pos2 > lado-1 or pos1<0 or pos2<0:
+                    raise ValueError
+                
+                return (pos1, pos2)
+
+            except ValueError:
+                print('A posição digitada é inválida.')
 
     def lista_de_jogos():
         '''Retorna a lista de todos os jogos salvos'''
@@ -113,11 +110,13 @@ class Interacao:
                 try:
                     lado_campo = int(input('Digite um tamanho para o campo entre 5 e 20: '))
                     if lado_campo<5 or lado_campo>20:
-                        raise LadoGrandeError
+                        raise TypeError
 
                     break
-                except LadoGrandeError:
+                except TypeError:
                     print('Erro: o tamanho do campo deve estar entre 5 e 20')
+                except ValueError:
+                    print('Erro: o valor digitado deve ser um inteiro entre 5 e 20')
 
             jogo = Campo(lado_campo)
             jogo.minar_campo()
@@ -126,6 +125,7 @@ class Interacao:
 
             for casa in jogo.campo:
                 Log.escrever_jogo(nome_arquivo,str(casa))
+            
             Log.escrever_jogo(nome_arquivo, '\n')
 
             jogo.transforma_em_matriz()
@@ -141,6 +141,8 @@ class Interacao:
             pos = Interacao.posicao()
             Log.escrever_jogada(arquivo,pos)
             situ, venceu = jogo.desmascarar(pos)
+            jogo.imprimir_campo() ### SOMENTE PARA TESTE ###
+            jogo.imprimir_mascara()
             
             if venceu:
                 break
@@ -184,13 +186,3 @@ class Interacao:
         pass
         #importar de outras funcões 
 
-
-
-class NumError(Exception):
-    pass
-
-class PosError(Exception):
-    pass
-
-class LadoGrandeError(Exception):
-    pass
