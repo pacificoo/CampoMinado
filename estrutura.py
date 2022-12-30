@@ -33,7 +33,7 @@ class Campo:
         self.campo = list(self.campo)
         for elem in range(len(self.campo)):
             self.campo[elem] = list(self.campo[elem])
-    
+
     def transforma_em_mascara(self):
         ''' Transforma o atributo mascara no tipo lista organizado em matriz quadrada '''
 
@@ -42,6 +42,8 @@ class Campo:
         self.mascara = list(self.mascara)
         for elem in range(len(self.mascara)):
             self.mascara[elem] = list(self.mascara[elem])
+
+    
             
     def imprimir_campo(self):
         for linha in self.campo:
@@ -121,7 +123,6 @@ class Campo:
     def desmascarar(self,tupla):
         '''funcao que abre as casas e coloca o número de bombas ao seu redor
         Campo->tupla'''
-        tupla = Interacao.posicao()
         
         pos1 = tupla[0]
         pos2 = tupla[1]
@@ -199,4 +200,3 @@ Campo->none'''
             linha+=1
 
          
-
