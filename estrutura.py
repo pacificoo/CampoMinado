@@ -9,6 +9,7 @@ class Campo:
         self.lado = lado #Tamanho do lado do campo minado
         self.tamanho = lado**2 #Quantidade de casas do campo minado
         self.campo = [0]*self.tamanho #campo minado
+        self.mascara = [(lado*['#'])]*lado #mascara
 
     def transforma_em_array(self):
         ''' Transforma o atributo campo no tipo np.array '''
@@ -119,6 +120,51 @@ class Campo:
         else:
             num = self.campo[pos1][pos2]
             self.mascara[pos1][pos2] = num
+            if num == 0 and (pos1 !=0 and pos2!=self.lado-1 and pos1!=self.lado-1 and pos2!=0):
+                self.mascara[pos1][pos2+1] = self.campo[pos1][pos2+1]
+                self.mascara[pos1][pos2-1] = self.campo[pos1][pos2-1]
+                self.mascara[pos1-1][pos2] = self.campo[pos1-1][pos2]
+                self.mascara[pos1-1][pos2-1] = self.campo[pos1-1][pos2-1]
+                self.mascara[pos1-1][pos2+1] = self.campo[pos1-1][pos2+1]
+                self.mascara[pos1+1][pos2] = self.campo[pos1+1][pos2]
+                self.mascara[pos1+1][pos2-1] = self.campo[pos1+1][pos2-1]
+                self.mascara[pos1+1][pos2+1] = self.campo[pos1+1][pos2+1]
+                
+            if num == 0 and pos1!=0 and pos1!=self.lado-1 and pos2==0:
+                self.mascara[pos1][pos2+1] = self.campo[pos1][pos2+1]
+                self.mascara[pos1-1][pos2+1] = self.campo[pos1-1][pos2+1]
+                self.mascara[pos1-1][pos2] = self.campo[pos1-1][pos2]
+                self.mascara[pos1+1][pos2] = self.campo[pos1+1][pos2]
+                self.mascara[pos1+1][pos2+1] = self.campo[pos1+1][pos2+1]
+                
+            if num == 0 and pos1!=0 and pos1!=self.lado-1 and pos2==self.lado-1:
+                self.mascara[pos1][pos2-1] = self.campo[pos1][pos2-1]
+                self.mascara[pos1-1][pos2] = self.campo[pos1-1][pos2]
+                self.mascara[pos1-1][pos2-1] = self.campo[pos1-1][pos2-1]
+                self.mascara[pos1+1][pos2] = self.campo[pos1+1][pos2]
+                self.mascara[pos1+1][pos2-1] = self.campo[pos1+1][pos2-1]
+                
+            if num==0 and pos1==0 and pos2==0:
+                self.mascara[pos1][pos2+1] = self.campo[pos1][pos2+1]
+                self.mascara[pos1+1][pos2] = self.campo[pos1+1][pos2]
+                self.mascara[pos1+1][pos2+1] = self.campo[pos1+1][pos2+1]
+                
+            if num ==0 and  pos1==0 and pos2==self.lado-1:
+                self.mascara[pos1][pos2+1] = self.campo[pos1][pos2+1]
+                self.mascara[pos1-1][pos2] = self.campo[pos1-1][pos2]
+                self.mascara[pos1-1][pos2+1] = self.campo[pos1+1][pos2+1]
+
+            if num==0 and pos1==0 and pos2==self.lado-1:
+                self.mascara[pos1][pos2-1] = self.campo[pos1][pos2-1]
+                self.mascara[pos1+1][pos2] = self.campo[pos1+1][pos2]
+                self.mascara[pos1+1][pos2-1] = self.campo[pos1+1][pos2-1]
+
+            if num==0 and pos1==self.lado-1 and pos2==self.lado-1 :
+                self.mascara[pos1][pos2-1] = self.campo[pos1][pos2-1]
+                self.mascara[pos1-1][pos2] = self.campo[pos1-1][pos2]
+                self.mascara[pos1-1][pos2-1] = self.campo[pos1-1][pos2-1]
+            
+            
             bools = (True,False)
             num_1= self.contador()
             num_2 = self.bombas()
