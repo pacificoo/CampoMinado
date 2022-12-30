@@ -1,5 +1,6 @@
 from analise import Analise
 from log import Log
+from estrutura import Campo
 
 class Interacao:
         
@@ -36,7 +37,7 @@ class Interacao:
         combinacao= []
         for i in range(Campo.tamanho()): #confirmar essa 'chamada'
                 for j in range(Campo.tamanho()):
-                combinacao.append([i,j])            
+                    combinacao.append([i,j])            
         return combinacao
 
     def posicao():
@@ -74,6 +75,7 @@ class Interacao:
             
             jogo = input('\nDigite o número do jogo que deseja carregar dentre a lista acima: ')
             Interacao.rodar_jogo(jogos[jogo])
+
         else:
             print('Não há jogos salvos')
     
@@ -88,69 +90,13 @@ class Interacao:
             else:
                 jogos_arquivo = open("LOG\Lista de jogos.txt", 'a')
                 jogos_arquivo.write(arquivo + '\n')
+                jogos_arquivo.close()
+
+                Log.escrever_jogo(arquivo)
+                
                 break
         
         Interacao.rodar_jogo(arquivo)
         
         
     
-    def rodar_jogo(arquivo):
-        '''funcao que roda o jogo para o usuário
-        interacao->none'''
-        
-        situ = True
-        while situ:
-            pos = Interacao.posicao()
-            Log.escrever_jogo(arquivo,pos)
-            
-            jogadas_arquivo = open(arquivo +'.txt')
-            jogadas = jogadas_arquivo.readlines()
-            jogadas_arquivo.close()
-            
-            for jogada in jogadas:
-                situ, venceu = 
-            situ, venceu = Campo.mascara(pos)
-            
-            if venceu:
-                break
-            
-
-    def menu_Principal():
-        '''funcao que escolhe entre as seguintes opções: Novo Jogo (1), carregar jogo
-        (2), estatísticas (3), regras dos jogo (4), e sair do jogo (5)
-        Interacao->none'''
-
-        while True:
-            print('\n--------Menu Principal----------\n')
-            print('Para criar um Novo Jogo aperte 1\nPara carregar um jogo aperte 2\nPara ver as estatisticas aperte 3\nPara ver as regras do jogo aperte 4\nPara sair do jogo aperte 5')
-            while True:
-                num = input('Digite o número escolhido ')
-                if not( len(num)!=1 or num[0] not in '12345'):
-                    break
-                print('O numero não é válido ou o valor digitado não é um número')
-                
-                
-            if int(num) == 1:
-                Interacao.novo_jogo()
-            if int(num) == 2:
-                Interacao.carregar_jogo()
-            if int(num)==3:
-                Interacao.estatisticas()
-            if int(num) == 4:
-                Interacao.regras()
-            if int(num) ==5:
-                break
-
-    def estatisticas(dados):
-        '''funcao que printa para o usuario as estatisticas dos jogos anteriores'''
-        pass
-        #importar de outras funcões 
-
-class NumError(Exception):
-    pass
-
-
-class PosError(Exception):
-    pass
-
-        
