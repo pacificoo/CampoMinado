@@ -1,6 +1,6 @@
 import numpy as np
 import random as rd
-
+from interacao import Interacao
 class Campo:
 
     def __init__(self,lado):
@@ -105,7 +105,7 @@ class Campo:
     def desmascarar(self,tupla):
         '''funcao que abre as casas e coloca o número de bombas ao seu redor
         Campo->bool'''
-        tupla = interacao.posicao()
+        tupla = Interacao.posicao()
         
         pos1 = tupla[0]
         pos2 = tupla[1]
