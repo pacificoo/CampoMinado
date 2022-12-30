@@ -73,10 +73,72 @@ class Campo:
 
                     self.campo[i][j] = cont
 
-    def mascara(self):
-        ''' Campo que é visível ao usuário durante a partida '''
+    def imprimir_mascara(self):
+        ''' Campo que é visível ao usuário durante a partida
+        Campo ->none'''
+        for linha in self.mascara:
+            for elemento in linha:
+                print(elemento,end='    ')
+            print('\n')
+    
+    def contador(self):
+        '''funcao que conta quantas bombas estão na mascara
+        Campo->int'''
+        cont = 0
+        for linha in self.mascara:
+            for elem in linha:
+                if elem == '#':
+                    cont+=1
 
-        pass
+        return cont
+
+    def bombas(self):
+        '''funcao que conta quantas bombas estão escondidas
+        Campo->int'''
+        cont = 0
+        for linha in self.campo:
+            for elem in linha:
+                if elem == 'b':
+                    cont+=1
+        return cont
+
+    def desmascarar(self,tupla):
+        '''funcao que abre as casas e coloca o número de bombas ao seu redor
+        Campo->bool'''
+        tupla = interacao.posicao()
+        
+        pos1 = tupla[0]
+        pos2 = tupla[1]
+        if self.campo[pos1][pos2]=='b': 
+            return False
+        else:
+            num = self.campo[pos1][pos2]
+            self.mascara[pos1][pos2] = num
+            bools = True
+            num_1= self.contador()
+            num_2 = self.bombas()
+            
+        if num_1 == num_2 and self.campo[pos1][pos2]!='b':
+            bools = True, True 
+
+        return bools
+        
+    
+    def derrota(self):
+        '''Funcao que abre todas as bombas na mascara quando o usuário perde o jogo
+Campo->none'''
+        print('Você Perdeu')
+        linha=0
+        elem=0
+        for i in self.campo:
+            for j in i :
+                if j=='b':
+                    self.mascara[linha][elem]='b'
+                elem+=1
+            elem =0
+            linha+=1
+
+         
 
 
 
