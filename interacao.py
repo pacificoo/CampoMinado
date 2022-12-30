@@ -100,3 +100,97 @@ class Interacao:
         
         
     
+    def rodar_jogo(nome_arquivo):
+        '''funcao que roda o jogo para o usuário
+        interacao->none'''
+
+        lado_campo, campo, jogadas = Log.interpretar_jogo_salvo(nome_arquivo)
+
+        if not lado_campo:
+
+            while True:
+
+                try:
+                    lado_campo = int(input('Digite um tamanho para o campo entre 5 e 20: '))
+                    if lado_campo<5 or lado_campo>20:
+                        raise LadoGrandeError
+
+                    break
+                except LadoGrandeError:
+                    print('Erro: o tamanho do campo deve estar entre 5 e 20')
+
+            jogo = Campo(lado_campo)
+            jogo.minar_campo()
+            jogo.numerar_campo()
+            jogo.transforma_em_lista()
+
+            for casa in jogo.campo:
+                Log.escrever_jogo(nome_arquivo,str(casa))
+            Log.escrever_jogo(nome_arquivo, '\n')
+
+            jogo.transforma_em_matriz()
+        
+        for jogada_salva in jogadas:
+            jogo.desmascarar(jogada_salva)
+
+        jogo.imprimir_mascara()
+
+        situ = True
+
+        while situ:
+            pos = Interacao.posicao()
+            Log.escrever_jogada(arquivo,pos)
+            situ, venceu = jogo.desmascarar(pos)
+            
+            if venceu:
+                break
+
+        if venceu:
+            print('Parabéns!!! Você venceu o jogo.')
+        else:
+            print('Que pena! Você perdeu o jogo.')
+
+        Interacao.menu_principal()
+            
+
+    def menu_Principal():
+        '''funcao que escolhe entre as seguintes opções: Novo Jogo (1), carregar jogo
+        (2), estatísticas (3), regras dos jogo (4), e sair do jogo (5)
+        Interacao->none'''
+
+        while True:
+            print('\n--------Menu Principal----------\n')
+            print('Para criar um Novo Jogo aperte 1\nPara carregar um jogo aperte 2\nPara ver as estatisticas aperte 3\nPara ver as regras do jogo aperte 4\nPara sair do jogo aperte 5')
+            while True:
+                num = input('Digite o número escolhido ')
+                if not( len(num)!=1 or num[0] not in '12345'):
+                    break
+                print('O numero não é válido ou o valor digitado não é um número')
+                
+                
+            if int(num) == 1:
+                Interacao.novo_jogo()
+            if int(num) == 2:
+                Interacao.carregar_jogo()
+            if int(num)==3:
+                Interacao.estatisticas()
+            if int(num) == 4:
+                Interacao.regras()
+            if int(num) ==5:
+                break
+
+    def estatisticas(dados):
+        '''funcao que printa para o usuario as estatisticas dos jogos anteriores'''
+        pass
+        #importar de outras funcões 
+
+
+
+class NumError(Exception):
+    pass
+
+class PosError(Exception):
+    pass
+
+class LadoGrandeError(Exception):
+    pass
