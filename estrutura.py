@@ -114,7 +114,7 @@ class Campo:
         else:
             num = self.campo[pos1][pos2]
             self.mascara[pos1][pos2] = num
-            bools = (True,Flase)
+            bools = (True,False)
             num_1= self.contador()
             num_2 = self.bombas()
             
@@ -124,7 +124,7 @@ class Campo:
         return bools
         
     
-    def derrota(self):
+    def fim_de_jogo(self):
         '''Funcao que abre todas as bombas na mascara quando o usuário perde o jogo
 Campo->none'''
         linha=0
