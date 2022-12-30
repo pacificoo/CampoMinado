@@ -1,6 +1,7 @@
 import numpy as np
 import random as rd
-from interacao import Interacao
+
+
 class Campo:
 
     def __init__(self,lado):
@@ -32,8 +33,8 @@ class Campo:
         self.campo = list(self.campo)
         for elem in range(len(self.campo)):
             self.campo[elem] = list(self.campo[elem])
-            
-     def transforma_em_mascara(self):
+    
+    def transforma_em_mascara(self):
         ''' Transforma o atributo mascara no tipo lista organizado em matriz quadrada '''
 
         self.mascara = np.array(list(self.mascara))
@@ -198,6 +199,4 @@ Campo->none'''
             linha+=1
 
          
-
-
 
