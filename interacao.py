@@ -124,7 +124,7 @@ class Interacao:
             jogo.transforma_em_lista()
 
             for casa in jogo.campo:
-                Log.escrever_jogo(nome_arquivo,str(casa))
+                Log.escrever_jogo(nome_arquivo,str(casa) + ' ')
             
             Log.escrever_jogo(nome_arquivo, '\n')
 
@@ -133,14 +133,17 @@ class Interacao:
         for jogada_salva in jogadas:
             jogo.desmascarar(jogada_salva)
 
+        jogo.imprimir_campo()
         jogo.imprimir_mascara()
 
         situ = True
 
         while situ:
-            pos = Interacao.posicao()
-            Log.escrever_jogada(arquivo,pos)
+            pos = Interacao.posicao(jogo.lado)
+            Log.escrever_jogada(nome_arquivo,pos)
             situ, venceu = jogo.desmascarar(pos)
+            if not situ:
+                jogo.fim_de_jogo()
             jogo.imprimir_campo() ### SOMENTE PARA TESTE ###
             jogo.imprimir_mascara()
             
@@ -155,7 +158,7 @@ class Interacao:
         Interacao.menu_principal()
             
 
-    def menu_Principal():
+    def menu_principal():
         '''funcao que escolhe entre as seguintes opções: Novo Jogo (1), carregar jogo
         (2), estatísticas (3), regras dos jogo (4), e sair do jogo (5)
         Interacao->none'''
@@ -185,4 +188,6 @@ class Interacao:
         '''funcao que printa para o usuario as estatisticas dos jogos anteriores'''
         pass
         #importar de outras funcões 
+
+
 
