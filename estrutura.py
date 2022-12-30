@@ -104,17 +104,17 @@ class Campo:
 
     def desmascarar(self,tupla):
         '''funcao que abre as casas e coloca o número de bombas ao seu redor
-        Campo->bool'''
+        Campo->tupla'''
         tupla = Interacao.posicao()
         
         pos1 = tupla[0]
         pos2 = tupla[1]
         if self.campo[pos1][pos2]=='b': 
-            return False
+            return (False)
         else:
             num = self.campo[pos1][pos2]
             self.mascara[pos1][pos2] = num
-            bools = True
+            bools = (True)
             num_1= self.contador()
             num_2 = self.bombas()
             
