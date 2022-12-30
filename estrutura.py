@@ -127,7 +127,6 @@ class Campo:
     def derrota(self):
         '''Funcao que abre todas as bombas na mascara quando o usuário perde o jogo
 Campo->none'''
-        print('Você Perdeu')
         linha=0
         elem=0
         for i in self.campo:
