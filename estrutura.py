@@ -33,6 +33,15 @@ class Campo:
         for elem in range(len(self.campo)):
             self.campo[elem] = list(self.campo[elem])
             
+     def transforma_em_mascara(self):
+        ''' Transforma o atributo mascara no tipo lista organizado em matriz quadrada '''
+
+        self.mascara = np.array(list(self.mascara))
+        self.mascara.shape = (self.lado,self.lado)
+        self.mascara = list(self.mascara)
+        for elem in range(len(self.mascara)):
+            self.mascara[elem] = list(self.mascara[elem])
+            
     def imprimir_campo(self):
         for linha in self.campo:
             for elemento in linha:
