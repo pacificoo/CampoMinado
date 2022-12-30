@@ -31,7 +31,12 @@ class Campo:
         self.campo = list(self.campo)
         for elem in range(len(self.campo)):
             self.campo[elem] = list(self.campo[elem])
-        
+            
+    def imprimir_campo(self):
+        for linha in self.campo:
+            for elemento in linha:
+                print(elemento,end='    ')
+            print('\n')   
 
     def minar_campo(self):
         ''' Coloca as bombas em lugares aleatórios do campo '''
