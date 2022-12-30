@@ -17,7 +17,7 @@ class Log:
         caminho_arquivo = 'LOG\\' + nome_arquivo + '.txt'
         
         arquivo = open(caminho_arquivo,'a')
-        arquivo.write(jogada[0] + ' ' + jogada[1] + '\n')
+        arquivo.write(str(jogada[0]) + ' ' + str(jogada[1]) + '\n')
         arquivo.close()
 
 
@@ -38,6 +38,7 @@ class Log:
 
         arquivo = open('LOG\\' + nome_arquivo + '.txt')
         linhas = arquivo.readlines()
+        arquivo.close()
         
         if len(linhas) == 0:
             return False, False, []
@@ -50,7 +51,7 @@ class Log:
         for jogada in linhas[1:len(linhas)]:
             jogadas.append(tuple(jogada.split()))
 
-        lado_campo = len(campo)^0.5
+        lado_campo = len(campo)**0.5
 
         for elem in campo:
             if type(elem) == int:
