@@ -11,6 +11,7 @@ class Campo:
         self.tamanho = lado**2 #Quantidade de casas do campo minado
         self.campo = [0]*self.tamanho #campo minado
         self.mascara = [(lado*['#'])]*lado #mascara
+        self.casas = [] #casas abertas
 
     def transforma_em_array(self):
         ''' Transforma o atributo campo no tipo np.array '''
@@ -119,7 +120,14 @@ class Campo:
                 if elem == 'b':
                     cont+=1
         return cont
-
+    
+    def decifrar(self,pos1,pos2):
+        '''funcao que abre a casa escolhida, modificando a mascara
+        Campo,int,int->none'''
+            num = self.campo[pos1][pos2]
+            self.mascara[pos1][pos2] = num
+            self.casas.append((pos1,pos2))
+            
     def desmascarar(self,tupla):
         '''funcao que abre as casas e coloca o número de bombas ao seu redor
         Campo->tupla'''
@@ -128,62 +136,49 @@ class Campo:
         pos2 = tupla[1]
         if self.campo[pos1][pos2]=='b': 
             return (False,False)
+            
         else:
-            num = self.campo[pos1][pos2]
-            self.mascara[pos1][pos2] = num
-            if num == 0 and (pos1 !=0 and pos2!=self.lado-1 and pos1!=self.lado-1 and pos2!=0):
-                self.mascara[pos1][pos2+1] = self.campo[pos1][pos2+1]
-                self.mascara[pos1][pos2-1] = self.campo[pos1][pos2-1]
-                self.mascara[pos1-1][pos2] = self.campo[pos1-1][pos2]
-                self.mascara[pos1-1][pos2-1] = self.campo[pos1-1][pos2-1]
-                self.mascara[pos1-1][pos2+1] = self.campo[pos1-1][pos2+1]
-                self.mascara[pos1+1][pos2] = self.campo[pos1+1][pos2]
-                self.mascara[pos1+1][pos2-1] = self.campo[pos1+1][pos2-1]
-                self.mascara[pos1+1][pos2+1] = self.campo[pos1+1][pos2+1]
+            if self.campo[pos1][pos2]==0:
+                self.decifrar(pos1,pos2)
+                self.zeros(tupla)
                 
-            if num == 0 and pos1!=0 and pos1!=self.lado-1 and pos2==0:
-                self.mascara[pos1][pos2+1] = self.campo[pos1][pos2+1]
-                self.mascara[pos1-1][pos2+1] = self.campo[pos1-1][pos2+1]
-                self.mascara[pos1-1][pos2] = self.campo[pos1-1][pos2]
-                self.mascara[pos1+1][pos2] = self.campo[pos1+1][pos2]
-                self.mascara[pos1+1][pos2+1] = self.campo[pos1+1][pos2+1]
                 
-            if num == 0 and pos1!=0 and pos1!=self.lado-1 and pos2==self.lado-1:
-                self.mascara[pos1][pos2-1] = self.campo[pos1][pos2-1]
-                self.mascara[pos1-1][pos2] = self.campo[pos1-1][pos2]
-                self.mascara[pos1-1][pos2-1] = self.campo[pos1-1][pos2-1]
-                self.mascara[pos1+1][pos2] = self.campo[pos1+1][pos2]
-                self.mascara[pos1+1][pos2-1] = self.campo[pos1+1][pos2-1]
+            else:
+                self.decifrar(pos1,pos2)
                 
-            if num==0 and pos1==0 and pos2==0:
-                self.mascara[pos1][pos2+1] = self.campo[pos1][pos2+1]
-                self.mascara[pos1+1][pos2] = self.campo[pos1+1][pos2]
-                self.mascara[pos1+1][pos2+1] = self.campo[pos1+1][pos2+1]
-                
-            if num ==0 and  pos1==0 and pos2==self.lado-1:
-                self.mascara[pos1][pos2+1] = self.campo[pos1][pos2+1]
-                self.mascara[pos1-1][pos2] = self.campo[pos1-1][pos2]
-                self.mascara[pos1-1][pos2+1] = self.campo[pos1+1][pos2+1]
 
-            if num==0 and pos1==0 and pos2==self.lado-1:
-                self.mascara[pos1][pos2-1] = self.campo[pos1][pos2-1]
-                self.mascara[pos1+1][pos2] = self.campo[pos1+1][pos2]
-                self.mascara[pos1+1][pos2-1] = self.campo[pos1+1][pos2-1]
-
-            if num==0 and pos1==self.lado-1 and pos2==self.lado-1 :
-                self.mascara[pos1][pos2-1] = self.campo[pos1][pos2-1]
-                self.mascara[pos1-1][pos2] = self.campo[pos1-1][pos2]
-                self.mascara[pos1-1][pos2-1] = self.campo[pos1-1][pos2-1]
-            
-            
             bools = (True,False)
-            num_1= self.contador()
+            num_1 = self.contador()
             num_2 = self.bombas()
             
         if num_1 == num_2 and self.campo[pos1][pos2]!='b':
             bools = True, True 
 
+        
         return bools
+   
+    def zeros(self,tupla):
+        '''Funcao que revela todas as casas adjacentes a uma casa com zero bombas'
+        Campo,tupla ->none''
+        i = tupla[0]
+        j = tupla[1]
+        
+        teste = [(i-1, j-1),
+                 (i-1, j),
+                 (i-1, j+1),
+                 (i, j-1),
+                 (i, j+1),
+                 (i+1, j-1),
+                 (i+1, j),
+                 (i+1, j+1)]
+            
+        for casa in teste:
+            if  casa[0] <= self.lado-1 and casa[1] <= self.lado-1 and casa[0]>= 0 and casa[1]>=0 and casa not in self.casas: 
+                print(casa)
+                self.desmascarar(casa)
+    
+
+    
         
     
     def fim_de_jogo(self):
