@@ -12,7 +12,6 @@ class Interacao:
     
 
     def Tela_pause():
-        def Tela_pause():
         '''função em que o usuario pode escolher entre as seguintes opções: Voltar
         para o jogo(1), salvar o jogo em outro arquivo(2), voltar para o menu principal(3) e
         sair do jogo(4).
@@ -176,10 +175,16 @@ class Interacao:
             print('\n--------Menu Principal----------\n')
             print('Para criar um Novo Jogo aperte 1\nPara carregar um jogo aperte 2\nPara ver as estatisticas aperte 3\nPara ver as regras do jogo aperte 4\nPara sair do jogo aperte 5')
             while True:
-                num = int(input('Digite o número escolhido '))
-                if num<0 or num>6:
+                try:
+                    num = int(input('Digite o número escolhido '))
+
+                    if num<1 or num>5:
+                        raise ValueError
+
                     break
-                print('O numero não é válido ou o valor digitado não é um número')
+
+                except ValueError:
+                    print('O numero não é válido ou o valor digitado não é um número')
                 
                 
             if int(num) == 1:
@@ -197,6 +202,10 @@ class Interacao:
         '''funcao que printa para o usuario as estatisticas dos jogos anteriores'''
         pass
         #importar de outras funcões 
+
+
+
+
 
 
 
