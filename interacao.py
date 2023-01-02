@@ -36,7 +36,7 @@ class Interacao:
         if int(num) == 3:
             Interacao.novo_jogo()
         if int(num)==4:
-            Interacao.menu_Principal()
+            Interacao.menu_principal()
 
     def posicao(lado):
         '''função que pede a ao usuário posicao
