@@ -11,6 +11,7 @@ class Campo:
         self.tamanho = lado**2 #Quantidade de casas do campo minado
         self.campo = [0]*self.tamanho #campo minado
         self.mascara = [(lado*['#'])]*lado #mascara
+        self.transforma_em_mascara()
         self.casas = [] #casas abertas
 
     def transforma_em_array(self):
