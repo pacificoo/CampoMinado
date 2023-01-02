@@ -44,25 +44,32 @@ class Campo:
         for elem in range(len(self.mascara)):
             self.mascara[elem] = list(self.mascara[elem])
 
-    
             
     def imprimir_campo(self):
+        '''Imprime campo para o usuário'''
         for linha in self.campo:
-            for elemento in linha:
-                print(elemento,end='    ')
-            print('\n')   
+            print(*linha)
+
+
+    def imprimir_mascara(self):
+        ''' imprime campo que é visível ao usuário durante a partida
+        Campo ->none'''
+        for linha in self.mascara:
+            print(*linha)
+
 
     def minar_campo(self):
         ''' Coloca as bombas em lugares aleatórios do campo '''
         self.transforma_em_lista()
 
-        escopo = ['b'] + [0]*int((self.lado/2))
+        escopo = ['b']*18 + [0]*82
         
         for casa in range(len(self.campo)):
             situação = rd.sample(escopo,1)
             self.campo[casa] = situação
 
         self.transforma_em_array()
+
 
     def numerar_campo(self):
         ''' Numera o campo conforme a quantidade de bombas adjacentes à cada casa '''
@@ -91,14 +98,7 @@ class Campo:
                                 cont += 1
 
                     self.campo[i][j] = cont
-
-    def imprimir_mascara(self):
-        ''' Campo que é visível ao usuário durante a partida
-        Campo ->none'''
-        for linha in self.mascara:
-            for elemento in linha:
-                print(elemento,end='    ')
-            print('\n')
+                    
     
     def contador(self):
         '''funcao que conta quantas bombas estão na mascara
@@ -111,6 +111,7 @@ class Campo:
 
         return cont
 
+
     def bombas(self):
         '''funcao que conta quantas bombas estão escondidas
         Campo->int'''
@@ -120,14 +121,16 @@ class Campo:
                 if elem == 'b':
                     cont+=1
         return cont
-    
+
+
     def decifrar(self,pos1,pos2):
         '''funcao que abre a casa escolhida, modificando a mascara
         Campo,int,int->none'''
-            num = self.campo[pos1][pos2]
-            self.mascara[pos1][pos2] = num
-            self.casas.append((pos1,pos2))
-            
+        num = self.campo[pos1][pos2]
+        self.mascara[pos1][pos2] = num
+        self.casas.append((pos1,pos2))
+
+
     def desmascarar(self,tupla):
         '''funcao que abre as casas e coloca o número de bombas ao seu redor
         Campo->tupla'''
@@ -156,10 +159,11 @@ class Campo:
 
         
         return bools
-   
+
+
     def zeros(self,tupla):
-        '''Funcao que revela todas as casas adjacentes a uma casa com zero bombas'
-        Campo,tupla ->none''
+        '''Funcao que revela todas as casas adjacentes a uma casa com zero bombas
+        Campo,tupla ->none'''
         i = tupla[0]
         j = tupla[1]
         
@@ -178,12 +182,9 @@ class Campo:
                 self.desmascarar(casa)
     
 
-    
-        
-    
     def fim_de_jogo(self):
         '''Funcao que abre todas as bombas na mascara quando o usuário perde o jogo
-Campo->none'''
+        Campo->none'''
         linha=0
         elem=0
         for i in self.campo:
@@ -193,5 +194,3 @@ Campo->none'''
                 elem+=1
             elem =0
             linha+=1
-
-         
