@@ -140,6 +140,7 @@ class Campo:
         
         pos1 = int(tupla[0])
         pos2 = int(tupla[1])
+        tupla = (pos1,pos2)
         
         if self.campo[pos1][pos2]=='b': 
             return (False,False)
