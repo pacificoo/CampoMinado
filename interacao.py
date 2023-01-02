@@ -22,22 +22,24 @@ class Interacao:
         print('Para voltar para o jogo aperte 1\nsalvar o jogo em outro arquivo aperte 2\nvoltar para o menu principal aperte 3\nsair do jogo aperte 4')
         num = input('Digite o número escolhido ')
         while True:
-
+            
             try:
-                if ( len(num)!=1 or num[0] not in '1234'):
+                num = int(input('Digite o número escolhido '))
+                if num<0 or num>5:
                     raise ValueError
+                break
                     
             except ValueError:
                 
                 print('O numero não é válido ou o valor digitado não é um número')
-                num = input('Digite o número escolhido ')
-        if int(num) == 2:
-            Interacao.carregar_jogo()
-        if int(num) == 3:
-            Interacao.novo_jogo()
-        if int(num)==4:
+              
+        if num  == 2:
+            Interacao.carregar_jogo() 
+        if num == 3:
             Interacao.menu_principal()
-
+        if num==4:
+            Interacao.novo_jogo()
+        
     def posicao(lado):
         '''função que pede a ao usuário posicao
         none->int,int'''
@@ -174,8 +176,8 @@ class Interacao:
             print('\n--------Menu Principal----------\n')
             print('Para criar um Novo Jogo aperte 1\nPara carregar um jogo aperte 2\nPara ver as estatisticas aperte 3\nPara ver as regras do jogo aperte 4\nPara sair do jogo aperte 5')
             while True:
-                num = input('Digite o número escolhido ')
-                if not( len(num)!=1 or num[0] not in '12345'):
+                num = int(input('Digite o número escolhido '))
+                if num<0 or num>6:
                     break
                 print('O numero não é válido ou o valor digitado não é um número')
                 
