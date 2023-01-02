@@ -44,7 +44,7 @@ class Log:
             return False, False, []
         
         campo = linhas[0].split()
-        del(campo[-1])
+        print(campo)
         
         jogadas = []
 
@@ -58,3 +58,4 @@ class Log:
                 elem = int(elem)
         
         return lado_campo, campo, jogadas
+
