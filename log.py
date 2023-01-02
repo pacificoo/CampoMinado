@@ -44,7 +44,6 @@ class Log:
             return False, False, []
         
         campo = linhas[0].split()
-        print(campo)
         
         jogadas = []
 
