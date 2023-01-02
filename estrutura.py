@@ -48,6 +48,8 @@ class Campo:
             
     def imprimir_campo(self):
         '''Imprime campo para o usuário'''
+        self.transforma_em_matriz()
+        
         for linha in self.campo:
             print(*linha)
 
@@ -136,8 +138,9 @@ class Campo:
         '''funcao que abre as casas e coloca o número de bombas ao seu redor
         Campo->tupla'''
         
-        pos1 = tupla[0]
-        pos2 = tupla[1]
+        pos1 = int(tupla[0])
+        pos2 = int(tupla[1])
+        
         if self.campo[pos1][pos2]=='b': 
             return (False,False)
             
