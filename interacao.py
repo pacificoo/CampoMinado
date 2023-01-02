@@ -78,8 +78,22 @@ class Interacao:
             for i in range(len(jogos)):
                 print(i,jogos[i])
             
-            jogo = input('\nDigite o número do jogo que deseja carregar dentre a lista acima: ')
-            Interacao.rodar_jogo(jogos[jogo])
+            while True:
+                try:
+                    jogo = int(input('\nDigite o número do jogo que deseja carregar dentre a lista acima: '))
+
+                    if jogo <0 or jogo>= len(jogos):
+                        raise IndexError
+                    
+                    break
+                
+                except ValueError:
+                    print('Erro: o valor inserido deve ser um inteiro')
+
+                except IndexError:
+                    print('Erro: o número digitado não está entre a lista disponibilizada')
+
+            Interacao.rodar_jogo(jogos[jogo].replace('\n',''))
 
         else:
             print('Não há jogos salvos')
@@ -109,7 +123,7 @@ class Interacao:
         '''funcao que roda o jogo para o usuário
         interacao->none'''
 
-        lado_campo, campo, jogadas = Log.interpretar_jogo_salvo(nome_arquivo)
+        lado_campo, campo_salvo, jogadas = Log.interpretar_jogo_salvo(nome_arquivo)
 
         if not lado_campo:
 
@@ -137,6 +151,11 @@ class Interacao:
             Log.escrever_jogo(nome_arquivo, '\n')
 
             jogo.transforma_em_matriz()
+
+        else:
+            jogo = Campo(int(lado_campo))
+            jogo.campo = campo_salvo
+
         
         for jogada_salva in jogadas:
             jogo.desmascarar(jogada_salva)
@@ -202,6 +221,8 @@ class Interacao:
         '''funcao que printa para o usuario as estatisticas dos jogos anteriores'''
         pass
         #importar de outras funcões 
+
+
 
 
 
