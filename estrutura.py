@@ -146,7 +146,7 @@ class Campo:
             return (False,False)
             
         else:
-            if self.campo[pos1][pos2]==0:
+            if self.campo[pos1][pos2]==0 or self.campo[pos1][pos2]=='0':
                 self.decifrar(pos1,pos2)
                 self.zeros(tupla)
                 
