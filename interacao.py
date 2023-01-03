@@ -1,6 +1,7 @@
 from analise import Analise
 from log import Log
 from estrutura import Campo
+import time
 
 class Interacao:
         
@@ -9,14 +10,15 @@ class Interacao:
         none->none'''
         print('O objetivo do jogo é descobrir as casas vazias. A cada casa vazia descoberta, o número de bombas ao seu redor é revelado')
         print('O jogador perde se a casa escolhida conter uma bomba')
+        Interacao.menu_principal()
     
 
-    def Tela_pause():
+    def Tela_pause(nome_arquivo):
         '''função em que o usuario pode escolher entre as seguintes opções: Voltar
         para o jogo(1), Para carregar outro jogo salvo(2), voltar para o menu principal(3) e
         sair do jogo(4).
 
-        none->none'''
+        str->none'''
         print('\n--------Tela de Pause----------\n')
         print('Para voltar para o jogo aperte 1\nPara iniciar um jogo novo aperte 2\nPara carregar outro jogo já salvo aperte 3\nPara voltar para o menu principal aperte 4\nPara sair do jogo aperte 5')
 
@@ -31,13 +33,14 @@ class Interacao:
             except ValueError:
                 
                 print('O numero não é válido ou o valor digitado não é um número')
+                Log.escrever_erros(nome_arquivo, 'Erro: Tela pause: O numero não é válido ou o valor digitado não é um número')
 
         
         return num
         
-    def posicao(lado):
+    def posicao(lado,nome_arquivo):
         '''função que pede a ao usuário posicao
-        none->int,int'''
+        int,str->tuple'''
         while True:
             
             try:
@@ -47,8 +50,7 @@ class Interacao:
                     return pos
                 
                 posicao = pos.split('x')
-                
-                if len(posicao)!=2:
+                if len(posicao) != 2:
                     raise ValueError
                 
                 pos1 = int(posicao[0])
@@ -61,6 +63,7 @@ class Interacao:
 
             except ValueError:
                 print('A posição digitada é inválida.')
+                Log.escrever_erros(nome_arquivo,'Erro de posicão: A posição digitada é inválida.')
 
     def lista_de_jogos():
         '''Retorna a lista de todos os jogos salvos'''
@@ -91,9 +94,11 @@ class Interacao:
                 
                 except ValueError:
                     print('Erro: o valor inserido deve ser um inteiro')
+                    Log.escrever_erros('carregar_jogo','Erro: o valor inserido deve ser um inteiro')
 
                 except IndexError:
                     print('Erro: o número digitado não está entre a lista disponibilizada')
+                    Log.escrever_erros('carregar_jogo','Erro: o número digitado não está entre a lista disponibilizada')
 
             Interacao.rodar_jogo(jogos[jogo].replace('\n',''))
 
@@ -139,8 +144,11 @@ class Interacao:
                     break
                 except TypeError:
                     print('Erro: o tamanho do campo deve estar entre 5 e 20')
+                    Log.escrever_erros(nome_arquivo,'Erro: rodar_jogo: o tamanho do campo deve estar entre 5 e 20')
                 except ValueError:
                     print('Erro: o valor digitado deve ser um inteiro entre 5 e 20')
+                    Log.escrever_erros(nome_arquivo,'Erro: rodar_jogo: o valor digitado deve ser um inteiro entre 5 e 20')
+                    
 
             jogo = Campo(lado_campo)
             jogo.minar_campo()
@@ -161,7 +169,7 @@ class Interacao:
                 jogo.transforma_em_matriz()
             except:
                 print('Erro: o arquivo do jogo salvo foi corrompido')
-                Interacao.carregar_jogo(nome_arquivo)
+                Log.escrever_erros(nome_arquivo,'Erro: o arquivo do jogo salvo foi corrompido')
                 return None
 
         try:
@@ -170,7 +178,7 @@ class Interacao:
                 situ, venceu = jogo.desmascarar(jogada_salva)
         except:
             print('Erro: o arquivo do jogo salvo foi corrompido')
-            Interacao.carregar_jogo(nome_arquivo)
+            Log.escrever_erros(nome_arquivo,'Erro: o arquivo do jogo salvo foi corrompido')
             return None
             
 
@@ -181,12 +189,12 @@ class Interacao:
         
         while situ:
             verificacao = True
-            pos = Interacao.posicao(jogo.lado)
+            pos = Interacao.posicao(jogo.lado, nome_arquivo)
 
 
             #tela pause
             if pos == 'p':
-                pause = Interacao.Tela_pause()
+                pause = Interacao.Tela_pause(nome_arquivo)
                 verificacao = False
                 
                 if pause==2:
@@ -241,6 +249,7 @@ class Interacao:
 
             except ValueError:
                 print('O numero não é válido ou o valor digitado não é um número')
+                Interacao.carregar_jogo('menu_principal', 'Erro: O numero não é válido ou o valor digitado não é um número')
             
             
         if int(num) == 1:
@@ -258,12 +267,3 @@ class Interacao:
         '''funcao que printa para o usuario as estatisticas dos jogos anteriores'''
         pass
         #importar de outras funcões 
-
-
-
-
-
-
-
-
-
