@@ -48,6 +48,9 @@ class Interacao:
                 
                 posicao = pos.split('x')
                 
+                if len(posicao)!=2:
+                    raise ValueError
+                
                 pos1 = int(posicao[0])
                 pos2 = int(posicao[1])
                 
