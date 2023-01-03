@@ -1,4 +1,7 @@
-# CampoMinado
-log - ok
+CAMPO MINADO
+Trabalho final de computação 2 por: André Freitas Pacífico e Juliana Almeida de Oliveira
 
-VER a função Campo().transforma_em_lista(). os elementos estão sendo regravados como string.
+A pasta LOG não deve ser alterada, bem como seus arquivos.
+Os erros que ocorrem durante a execução do jogo estão em arquivos na pasta erros na pasta LOG.
+
+Divirta-se!
