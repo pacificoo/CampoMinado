@@ -199,6 +199,8 @@ class Interacao:
                 pause = Interacao.Tela_pause(nome_arquivo)
                 verificacao = False
                 
+                if pause == 1:
+                    jogo.imprimir_mascara()
                 if pause==2:
                     Interacao.novo_jogo()
                     return None
