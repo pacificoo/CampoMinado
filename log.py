@@ -25,8 +25,9 @@ class Log:
         '''função que escreve os erros ocorridos durante o funcionamento
         do jogo dentro de um arquivo com os dados do jogo
         str -> none'''
-        caminho_arquivo = 'LOG\\' + nome_arquivo + '_ERRORS.txt'
+        caminho_arquivo = 'LOG\\erros\\' + nome_arquivo + '_ERRORS.txt'
         erro += '\n'
+        erro = time.ctime() + ' ' + erro
         
         arquivo = open(caminho_arquivo,'a')
         arquivo.write(erro)
