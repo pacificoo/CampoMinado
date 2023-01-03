@@ -183,10 +183,8 @@ class Campo:
             
         for casa in teste:
             if  casa[0] <= self.lado-1 and casa[1] <= self.lado-1 and casa[0]>= 0 and casa[1]>=0 and casa not in self.casas: 
-                print(casa)
                 self.desmascarar(casa)
-    
-
+                
     def fim_de_jogo(self):
         '''Funcao que abre todas as bombas na mascara quando o usuário perde o jogo
         Campo->none'''
