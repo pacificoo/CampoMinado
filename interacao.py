@@ -13,13 +13,13 @@ class Interacao:
 
     def Tela_pause():
         '''função em que o usuario pode escolher entre as seguintes opções: Voltar
-        para o jogo(1), salvar o jogo em outro arquivo(2), voltar para o menu principal(3) e
+        para o jogo(1), Para carregar outro jogo salvo(2), voltar para o menu principal(3) e
         sair do jogo(4).
 
         none->none'''
         print('\n--------Tela de Pause----------\n')
-        print('Para voltar para o jogo aperte 1\nsalvar o jogo em outro arquivo aperte 2\nvoltar para o menu principal aperte 3\nsair do jogo aperte 4')
-        num = input('Digite o número escolhido ')
+        print('Para voltar para o jogo aperte 1\nPara iniciar um jogo novo aperte 2\nPara carregar outro jogo já salvo aperte 3\nPara voltar para o menu principal aperte 4\nPara sair do jogo aperte 5')
+
         while True:
             
             try:
@@ -31,13 +31,9 @@ class Interacao:
             except ValueError:
                 
                 print('O numero não é válido ou o valor digitado não é um número')
-              
-        if num  == 2:
-            Interacao.carregar_jogo() 
-        if num == 3:
-            Interacao.menu_principal()
-        if num==4:
-            Interacao.novo_jogo()
+
+        
+        return num
         
     def posicao(lado):
         '''função que pede a ao usuário posicao
@@ -45,8 +41,11 @@ class Interacao:
         while True:
             
             try:
-                pos = input('''Digite a posição escolhida separada por x no tipo LINHAxCOLUNA.
+                pos = input('''Digite a posição escolhida separada por x no tipo LINHAxCOLUNA ou digite "p" para pausar o jogo.
                             \nOs valores para linha e coluna devem estar entre 0 e tamanho do campo-1: ''')
+                if pos == 'p':
+                    return pos
+                
                 posicao = pos.split('x')
                 
                 pos1 = int(posicao[0])
@@ -80,7 +79,7 @@ class Interacao:
             
             while True:
                 try:
-                    jogo = int(input('\nDigite o número do jogo que deseja carregar dentre a lista acima: '))
+                    jogo = int(input('Digite o número do jogo que deseja carregar dentre a lista acima: '))
 
                     if jogo <0 or jogo>= len(jogos):
                         raise IndexError
@@ -104,7 +103,7 @@ class Interacao:
         jogos = Interacao.lista_de_jogos()
         while True:
             arquivo = input('Digite o nome do novo jogo: ')
-            if arquivo in jogos:
+            if arquivo + '\n' in jogos:
                 print('Este nome já foi usado pra outro jogo. Digite outro')
             else:
                 jogos_arquivo = open("LOG\Lista de jogos.txt", 'a')
@@ -153,36 +152,71 @@ class Interacao:
             jogo.transforma_em_matriz()
 
         else:
-            jogo = Campo(int(lado_campo))
-            jogo.campo = campo_salvo
+            try:
+                jogo = Campo(int(lado_campo))
+                jogo.campo = campo_salvo
+                jogo.transforma_em_matriz()
+            except:
+                print('Erro: o arquivo do jogo salvo foi corrompido')
+                Interacao.carregar_jogo(nome_arquivo)
+                return None
 
-        
-        for jogada_salva in jogadas:
-            jogo.desmascarar(jogada_salva)
+        try:
+            
+            for jogada_salva in jogadas:
+                situ, venceu = jogo.desmascarar(jogada_salva)
+        except:
+            print('Erro: o arquivo do jogo salvo foi corrompido')
+            Interacao.carregar_jogo(nome_arquivo)
+            return None
+            
 
-        jogo.imprimir_campo()
+        #jogo.imprimir_campo() ### SOMENTE PARA TESTE ###
         jogo.imprimir_mascara()
 
         situ = True
-
+        
         while situ:
+            verificacao = True
             pos = Interacao.posicao(jogo.lado)
-            Log.escrever_jogada(nome_arquivo,pos)
-            situ, venceu = jogo.desmascarar(pos)
-            if not situ:
-                jogo.fim_de_jogo()
-            jogo.imprimir_campo() ### SOMENTE PARA TESTE ###
-            jogo.imprimir_mascara()
-            
+
+
+            #tela pause
+            if pos == 'p':
+                pause = Interacao.Tela_pause()
+                verificacao = False
+                
+                if pause==2:
+                    Interacao.novo_jogo()
+                    return None
+                if pause == 3:
+                    Interacao.carregar_jogo()
+                    return None
+                if pause == 4:
+                    Interacao.menu_principal()
+                    return None
+                if pause==5:
+                    return None
+            #tela pause
+
+            else:
+                Log.escrever_jogada(nome_arquivo,pos)
+                situ, venceu = jogo.desmascarar(pos)
+                if not situ:
+                    jogo.fim_de_jogo()
+                #jogo.imprimir_campo() ### SOMENTE PARA TESTE ###
+                jogo.imprimir_mascara()
+                
+                if venceu:
+                    break
+
+        if verificacao:
             if venceu:
-                break
+                print('Parabéns!!! Você venceu o jogo.')
+            else:
+                print('Que pena! Você perdeu o jogo.')
 
-        if venceu:
-            print('Parabéns!!! Você venceu o jogo.')
-        else:
-            print('Que pena! Você perdeu o jogo.')
-
-        Interacao.menu_principal()
+            Interacao.menu_principal()
             
 
     def menu_principal():
@@ -190,32 +224,32 @@ class Interacao:
         (2), estatísticas (3), regras dos jogo (4), e sair do jogo (5)
         Interacao->none'''
 
+        
+        print('\n--------Menu Principal----------\n')
+        print('Para criar um Novo Jogo aperte 1\nPara carregar um jogo aperte 2\nPara ver as estatisticas aperte 3\nPara ver as regras do jogo aperte 4\nPara sair do jogo aperte 5')
         while True:
-            print('\n--------Menu Principal----------\n')
-            print('Para criar um Novo Jogo aperte 1\nPara carregar um jogo aperte 2\nPara ver as estatisticas aperte 3\nPara ver as regras do jogo aperte 4\nPara sair do jogo aperte 5')
-            while True:
-                try:
-                    num = int(input('Digite o número escolhido '))
+            try:
+                num = int(input('Digite o número escolhido '))
 
-                    if num<1 or num>5:
-                        raise ValueError
+                if num<1 or num>5:
+                    raise ValueError
 
-                    break
-
-                except ValueError:
-                    print('O numero não é válido ou o valor digitado não é um número')
-                
-                
-            if int(num) == 1:
-                Interacao.novo_jogo()
-            if int(num) == 2:
-                Interacao.carregar_jogo()
-            if int(num)==3:
-                Interacao.estatisticas()
-            if int(num) == 4:
-                Interacao.regras()
-            if int(num) ==5:
                 break
+
+            except ValueError:
+                print('O numero não é válido ou o valor digitado não é um número')
+            
+            
+        if int(num) == 1:
+            Interacao.novo_jogo()
+        if int(num) == 2:
+            Interacao.carregar_jogo()
+        if int(num)==3:
+            Interacao.estatisticas()
+        if int(num) == 4:
+            Interacao.regras()
+        if int(num) ==5:
+            pass
 
     def estatisticas(dados):
         '''funcao que printa para o usuario as estatisticas dos jogos anteriores'''
