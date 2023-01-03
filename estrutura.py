@@ -196,4 +196,4 @@ class Campo:
                     self.mascara[linha][elem]='b'
                 elem+=1
             elem =0
-            linha+=1
+            linha+=1 
