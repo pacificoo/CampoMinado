@@ -48,7 +48,7 @@ class Campo:
             
     def imprimir_campo(self):
         '''Imprime campo para o usuário'''
-        self.transforma_em_matriz()
+    
         
         for linha in self.campo:
             print(*linha)
