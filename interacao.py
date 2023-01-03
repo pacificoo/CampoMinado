@@ -26,7 +26,7 @@ class Interacao:
             
             try:
                 num = int(input('Digite o número escolhido '))
-                if num<0 or num>5:
+                if num<1 or num>5:
                     raise ValueError
                 break
                     
@@ -170,6 +170,7 @@ class Interacao:
             except:
                 print('Erro: o arquivo do jogo salvo foi corrompido')
                 Log.escrever_erros(nome_arquivo,'Erro: o arquivo do jogo salvo foi corrompido')
+                Interacao.carregar_jogo(nome_arquivo)
                 return None
 
         try:
@@ -179,6 +180,7 @@ class Interacao:
         except:
             print('Erro: o arquivo do jogo salvo foi corrompido')
             Log.escrever_erros(nome_arquivo,'Erro: o arquivo do jogo salvo foi corrompido')
+            Interacao.carregar_jogo(nome_arquivo)
             return None
             
 
@@ -249,7 +251,7 @@ class Interacao:
 
             except ValueError:
                 print('O numero não é válido ou o valor digitado não é um número')
-                Interacao.carregar_jogo('menu_principal', 'Erro: O numero não é válido ou o valor digitado não é um número')
+                Log.escrever_erros('menu_principal', 'Erro: O numero não é válido ou o valor digitado não é um número')
             
             
         if int(num) == 1:
