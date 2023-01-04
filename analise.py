@@ -28,7 +28,7 @@ class Analise:
         '''Retorna os tempos, em ordem crescente, de todos os jogos salvos.
         None -> list'''
         
-        tempos = [0]
+        tempos = []
         for jogo in jogos:
             
             tempos += [float(Analise.pega_tempo(str.replace(jogo,'\n','')))]
@@ -42,10 +42,11 @@ class Analise:
         '''Retorna os tempos de todos os jogos salvos.
         None -> list'''
         
-        tempos = [0]
+        tempos = []
         for jogo in jogos:
             
             tempos += [float(Analise.pega_tempo(str.replace(jogo,'\n','')))]
+
         
         return tempos
 
