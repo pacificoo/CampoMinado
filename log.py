@@ -37,7 +37,8 @@ class Log:
 
     def interpretar_jogo_salvo(nome_arquivo):
         '''Retorna as informações de um jogo: campo,
-        jogadas já realizadas e tamanho do lado do campo'''
+        jogadas já realizadas e tamanho do lado do campo
+        str->tupla'''
 
         arquivo = open('LOG\\' + nome_arquivo + '.txt')
         linhas = arquivo.readlines()
