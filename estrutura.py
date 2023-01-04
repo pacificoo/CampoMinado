@@ -15,20 +15,23 @@ class Campo:
         self.casas = [] #casas abertas
 
     def transforma_em_array(self):
-        ''' Transforma o atributo campo no tipo np.array '''
+        ''' Transforma o atributo campo no tipo np.array
+        Cstrutura->none'''
 
         self.campo = np.array(self.campo)
         self.campo.shape = (self.lado,self.lado)
 
     def transforma_em_lista(self):
-        ''' Transforma o atributo campo no tipo lista '''
+        ''' Transforma o atributo campo no tipo lista
+        Campo->none'''
 
         self.campo = np.array(list(self.campo))
         self.campo.shape = (self.tamanho)
         self.campo = list(self.campo)
 
     def transforma_em_matriz(self):
-        ''' Transforma o atributo campo no tipo lista organizado em matriz quadrada '''
+        ''' Transforma o atributo campo no tipo lista organizado em matriz quadrada
+        Campo->none'''
 
         self.campo = np.array(list(self.campo))
         self.campo.shape = (self.lado,self.lado)
@@ -37,7 +40,8 @@ class Campo:
             self.campo[elem] = list(self.campo[elem])
 
     def transforma_em_mascara(self):
-        ''' Transforma o atributo mascara no tipo lista organizado em matriz quadrada '''
+        ''' Transforma o atributo mascara no tipo lista organizado em matriz quadrada 
+        Campo->none'''
 
         self.mascara = np.array(list(self.mascara))
         self.mascara.shape = (self.lado,self.lado)
@@ -47,7 +51,8 @@ class Campo:
 
             
     def imprimir_campo(self):
-        '''Imprime campo para o usuário'''
+        '''Imprime campo para o usuário
+        Campo->none'''
     
         
         for linha in self.campo:
@@ -62,7 +67,8 @@ class Campo:
 
 
     def minar_campo(self):
-        ''' Coloca as bombas em lugares aleatórios do campo '''
+        ''' Coloca as bombas em lugares aleatórios do campo
+        Campo->none'''
         self.transforma_em_lista()
 
         escopo = ['b']*18 + [0]*82
@@ -75,7 +81,8 @@ class Campo:
 
 
     def numerar_campo(self):
-        ''' Numera o campo conforme a quantidade de bombas adjacentes à cada casa '''
+        ''' Numera o campo conforme a quantidade de bombas adjacentes à cada casa
+        Campo->none'''
 
         self.transforma_em_matriz()
 
