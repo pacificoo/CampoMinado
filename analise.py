@@ -8,7 +8,7 @@ class Analise:
         '''Grava o tempo de um jogo salvo em um arquivo na pasta data.
         str, float -> None'''
         
-        arquvo = open('\\data\\' + nome_arquivo + '_tempo.txt', 'w')
+        arquivo = open('data\\' + nome_arquivo + '_tempo.txt', 'w')
         arquivo.write(str(tempo))
         arquivo.close()
 
@@ -17,19 +17,18 @@ class Analise:
         '''Retorna o tempo já gasto em um jogo
         str -> float'''
         
-        arquvo = open('\\data\\' + nome_arquivo + '_tempo.txt')
+        arquivo = open('data\\' + nome_arquivo + '_tempo.txt')
         tempo = float(arquivo.read())
         arquivo.close()
 
         return tempo
 
 
-    def pega_todos_os_tempos():
+    def pega_todos_os_tempos(jogos):
         '''Retorna os tempos, em ordem crescente, de todos os jogos salvos.
         None -> list'''
         
-        jogos = Interacao.lista_de_jogos_ganhos()
-        tempos = []
+        tempos = [0]
         for jogo in jogos:
             
             tempos += [float(Analise.pega_tempo(str.replace(jogo,'\n','')))]
@@ -39,15 +38,41 @@ class Analise:
         return tempos
 
 
-    def pega_todos_os_tempos_sem_ordem():
+    def pega_todos_os_tempos_sem_ordem(jogos):
         '''Retorna os tempos de todos os jogos salvos.
         None -> list'''
         
-        jogos = Interacao.lista_de_jogos_ganhos()
-        tempos = []
+        tempos = [0]
         for jogo in jogos:
             
             tempos += [float(Analise.pega_tempo(str.replace(jogo,'\n','')))]
         
         return tempos
+
+    def plotar_grafico(tempos):
+        '''funcao que plota um infograma que relaciona o numero de vitorias com o tempo'''
+        fig, ax = plt.subplots()
+        ax.set_title('Vitórias por intervalo de tempo')
+        plt.xlabel('Tempo(s)')
+        cont =0
+        for n in tempos:
+            cont+=1
+        ax.set_yticks(np.arange(0,cont,1))
+        plt.ylabel('Número de Jogos')
+        plt.hist(tempos,rwidth=1)
+        plt.show()
+
+                
+    def salvar_grafico(tempos,nome_arquivo):
+        ig, ax = plt.subplots()
+        ax.set_title('Vitórias por intervalo de tempo')
+        plt.xlabel('Tempo(s)')
+        cont =0
+        for n in tempos:
+            cont+=1
+        ax.set_yticks(np.arange(0,cont,1))
+        plt.ylabel('Número de Jogos')
+        plt.hist(tempos,rwidth=1)
+        plt.savefig('data\\'+nome_arquivo +'.pdf')
     
+
