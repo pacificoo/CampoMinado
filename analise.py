@@ -4,23 +4,50 @@ from log import Log
 
 class Analise:
 
-    def estatisticas(arquivo):
-        '''funcao que le e armazena os dados dos jogos carregados no arquivo
-        none->none'''
-        pass 
+    def grava_tempo(nome_arquivo, tempo):
+        '''Grava o tempo de um jogo salvo em um arquivo na pasta data.
+        str, float -> None'''
+        
+        arquvo = open('\\data\\' + nome_arquivo + '_tempo.txt', 'w')
+        arquivo.write(str(tempo))
+        arquivo.close()
 
-    def tempo(dados):
-        '''funcao que plota um gráfico que relaciona os jogos e o tempo para finaliza-los'''
-        pass
+
+    def pega_tempo(nome_arquivo):
+        '''Retorna o tempo já gasto em um jogo
+        str -> float'''
+        
+        arquvo = open('\\data\\' + nome_arquivo + '_tempo.txt')
+        tempo = float(arquivo.read())
+        arquivo.close()
+
+        return tempo
 
 
-    def media_campo(dados):
-        '''funcao que plota o tempo medio de acordo com cada configuração do tabluleiro'''
-        pass
+    def pega_todos_os_tempos():
+        '''Retorna os tempos, em ordem crescente, de todos os jogos salvos.
+        None -> list'''
+        
+        jogos = Interacao.lista_de_jogos_ganhos()
+        tempos = []
+        for jogo in jogos:
+            
+            tempos += [float(Analise.pega_tempo(str.replace(jogo,'\n','')))]
 
-    def jogos(dados):
-        ''' funcao que plota um gráfico com a relação entre as partidas jogadas para cada configuração do
-        tabuleiro'''
-        pass
-    #ver os critérios
+        tempos.sort()
+        
+        return tempos
+
+
+    def pega_todos_os_tempos_sem_ordem():
+        '''Retorna os tempos de todos os jogos salvos.
+        None -> list'''
+        
+        jogos = Interacao.lista_de_jogos_ganhos()
+        tempos = []
+        for jogo in jogos:
+            
+            tempos += [float(Analise.pega_tempo(str.replace(jogo,'\n','')))]
+        
+        return tempos
     
