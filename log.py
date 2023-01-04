@@ -62,23 +62,33 @@ class Log:
         return lado_campo, campo, jogadas
 
 
-    def contagem_casas_abertas():
+    def contagem_casas_abertas(teste = True):
         '''Atualiza a contagem de casas abertas no LOG
         None -> int'''
         
         arquivo = open('data\casas abertas.txt')
-        try:
-            casas = int(arquivo.read()) +1
-        except:
-            print('O arquivo da quantidade de casas abertas foi corrompido.')
-            Log.escrever_erros('Log', 'Erro: O arquivo da quantidade de casas abertas foi corrompido.')
-            return 0
+        
+        if teste:
+            try:
+                casas = int(arquivo.read()) +1
+            except:
+                print('O arquivo da quantidade de casas abertas foi corrompido.')
+                Log.escrever_erros('Log', 'Erro: O arquivo da quantidade de casas abertas foi corrompido.')
+                
+            arquivo.close()
             
-        arquivo.close()
-        
-        arquivo2.open('data\casas abertas.txt','w')
-        arquivo2.write(str(casas))
-        arquivo2.close()
+            arquivo2 = open('data\casas abertas.txt','w')
+            arquivo2.write(str(casas))
+            arquivo2.close()
 
-        return casas
-        
+        else:
+            try:
+                casas = int(arquivo.read())
+            except:
+                print('O arquivo da quantidade de casas abertas foi corrompido.')
+                Log.escrever_erros('Log', 'Erro: O arquivo da quantidade de casas abertas foi corrompido.')
+                return 0
+                
+            arquivo.close()
+
+            return casas
