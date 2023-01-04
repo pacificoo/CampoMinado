@@ -14,7 +14,8 @@ class Interacao:
     
 
     def Tela_pause(nome_arquivo):
-        '''função em que o usuario pode escolher entre as seguintes opções: Voltar
+        '''função em que
+o usuario pode escolher entre as seguintes opções: Voltar
         para o jogo(1), Para carregar outro jogo salvo(2), voltar para o menu principal(3) e
         sair do jogo(4).
 
@@ -65,8 +66,19 @@ class Interacao:
                 print('A posição digitada é inválida.')
                 Log.escrever_erros(nome_arquivo,'Erro de posicão: A posição digitada é inválida.')
 
+
+
+    def lista_de_graficos():
+        '''Retorna a lista de todos os graficos salvos
+        none -> list'''
+        graficos_arquivo = open("LOG\Lista de graficos.txt")
+        graficos= graficos_arquivo.readlines()
+        graficos_arquivo.close()
+        return graficos
+        
     def lista_de_jogos():
-        '''Retorna a lista de todos os jogos salvos'''
+        '''Retorna a lista de todos os jogos salvos
+        none ->list'''
         jogos_arquivo = open("LOG\Lista de jogos.txt")
         jogos = jogos_arquivo.readlines()
         jogos_arquivo.close()
@@ -74,10 +86,14 @@ class Interacao:
 
 
     def lista_de_jogos_ganhos():
-        '''Retorna a lista de todos os jogos ganhos'''
+        '''Retorna a lista de todos os jogos ganhos
+        none ->list'''
         jogos_arquivo = open("LOG\Lista de jogos ganhos.txt")
         jogos = jogos_arquivo.readlines()
+
+
         jogos_arquivo.close()
+
         return jogos
    
 
@@ -85,7 +101,7 @@ class Interacao:
         '''funçao que seleciona um jogo salvo anteriormente
         str->none'''
         jogos = Interacao.lista_de_jogos()
-        
+
         if len(jogos) > 0:
             
             for i in range(len(jogos)):
@@ -98,7 +114,7 @@ class Interacao:
                     if jogo <0 or jogo>= len(jogos):
                         raise IndexError
 
-                    jogos_ganhos = lista_de_jogos_ganhos()
+                    jogos_ganhos = Interacao.lista_de_jogos_ganhos()
                     
                     if jogos[jogo] in jogos_ganhos:
                         raise TypeError
@@ -139,6 +155,7 @@ class Interacao:
 
                 Log.escrever_jogo(arquivo)
                 
+                
                 break
 
         Analise.grava_tempo(arquivo,0)
@@ -146,6 +163,7 @@ class Interacao:
         
         
     
+
     def rodar_jogo(nome_arquivo):
         '''funcao que roda o jogo para o usuário
         interacao->none'''
@@ -204,17 +222,18 @@ class Interacao:
             return None
             
 
-        #jogo.imprimir_campo() ### SOMENTE PARA TESTE ###
+        jogo.imprimir_campo() ### SOMENTE PARA TESTE ###
         jogo.imprimir_mascara()
 
         situ = True
+
         
         while situ:
             verificacao = True
-            tempo = Analise.pega_tempo()
+            tempo = Analise.pega_tempo(nome_arquivo)
             pos = Interacao.posicao(jogo.lado, nome_arquivo)
             tempo = round(time.time(),2) - tempo
-            grava_tempo(nome_arquivo, tempo)
+            Analise.grava_tempo(nome_arquivo, tempo)
 
 
             #tela pause
@@ -253,22 +272,24 @@ class Interacao:
         if verificacao:
             if venceu:
                 print('Parabéns!!! Você venceu o jogo.')
-                jogos_ganhos_arquivo = open("LOG\Lista de jogos.txt", 'a')
+                jogos_ganhos_arquivo = open("LOG\Lista de jogos ganhos.txt", 'a')
                 jogos_ganhos_arquivo.write(nome_arquivo + '\n')
                 jogos_ganhos_arquivo.close()
                 
             else:
                 print('Que pena! Você perdeu o jogo.')
+            #replace (???)
+            print(str.format('Você completou o jogo em {} segundos.',tempo))
 
-            print(str.replace('Você completou o jogo em {} segundos.',tempo))
+            tempos = Analise.pega_todos_os_tempos(Interacao.lista_de_jogos_ganhos())
 
-            tempos = Analise.pega_todos_os_tempos()
-            if not tempos:
+            
+            if tempo not in tempos:
                 print('Parabéns!!! Você tem um novo recorde de tempo')
 
-            elif tempo < tempos[0]:
+            elif tempo < tempos[1]:
                 print('Parabéns!!! Você tem um novo recorde de tempo. O recorde anterior era de '+ str(tempos[0]))
-            
+
 
             Interacao.menu_principal()
             
@@ -298,40 +319,56 @@ class Interacao:
         if int(num) == 1:
             Interacao.novo_jogo()
         if int(num) == 2:
+            
             Interacao.carregar_jogo()
         if int(num)==3:
             Interacao.estatisticas()
         if int(num) == 4:
             Interacao.regras()
-        
+
+
 
     def estatisticas():
         '''funcao que printa para o usuario as estatisticas dos jogos anteriores'''
         jogos = len(Interacao.lista_de_jogos())
         jogos_ganhos = len(Interacao.lista_de_jogos_ganhos())
         lista_jogos_ganhos = Interacao.lista_de_jogos_ganhos()
-        tempos = Analise.pega_todos_os_tempos()
-        tempos_sem_ordem = Analise.pega_todos_os_tempos_sem_ordem()
+        tempos = Analise.pega_todos_os_tempos(Interacao.lista_de_jogos_ganhos())
+        tempos_sem_ordem = Analise.pega_todos_os_tempos_sem_ordem(Interacao.lista_de_jogos_ganhos())
         tempo_total = sum(tempos)
-        casas = Log.contagem_de_casas_abertas()
+        casas = Log.contagem_casas_abertas()
 
         tempo_recorde = 'Não há tempo recorde ainda.'
         if len(tempos) >=1:
-            tempo_recorde = tempos[0]
+            tempo_recorde = tempos[1]
 
-        print('Jogos jogados: ' + str(jogos)) #jogos jogados
+        print('\nJogos jogados: ' + str(jogos)) #jogos jogados
         print('Tempo total jogado: ' + str(tempo_total)) #tempo total de jogos
         print('Tempo recorde: ' + str(tempo_recorde)) #tempo recorde
         print('Quantidade de jogos ganhos: '+ str(jogos_ganhos)) #jogos ganhos
         print('Quantidade de jogos perdidos: ' + str(jogos - jogos_ganhos)) #jogos perdidos
-        print('Quantidade de casas abertas') #casas abertas
+        print('Quantidade de casas abertas: ' + str(casas)) #total de casas abertas
 
-        teste = input('\nSe você quiser visualizar o gráfico de vitórias por margem de tempo aperte 1. Se quiser salvar o gráfico aperte 2.\nO gráfico será salvona pasta data\nCaso não queira fazer nada aperte qualquer outro caracter')
+        teste = input('\nSe você quiser visualizar o gráfico de vitórias por intervalo de tempo 1. Se quiser salvar o gráfico aperte 2.\nO gráfico será salvo na pasta data\nCaso não queira fazer nada aperte qualquer outro caracter ')
 
         if teste == '1':
-            Analise.plotar_grafico(lista_jogos_ganhos, tempos_sem_ordem)
+            Analise.plotar_grafico(tempos_sem_ordem)
         if teste == '2':
-            Analise.salvar_grafico(lista_jogos_ganhos, tempos_sem_ordem)
+            graficos = Interacao.lista_de_graficos()
+            nome = input('Digite um nome para o seu gráfico' )
 
-        Interacao.menu_inicial()
+            if nome + '\n' in graficos:
+                print('Este nome já foi usado pra outro grafico. Digite outro')
+            else:
+                jogos_arquivo = open("LOG\Lista de graficos.txt", 'a')
+                jogos_arquivo.write(nome + '\n')
+                
+                jogos_arquivo.close()
 
+            
+            Analise.salvar_grafico(tempos_sem_ordem,nome)
+
+
+        Interacao.menu_principal()
+
+Interacao.menu_principal()
