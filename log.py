@@ -76,7 +76,7 @@ class Log:
             
         arquivo.close()
         
-        arquivo2.open('data\\casas abertas',w)
+        arquivo2.open('data\casas abertas.txt','w')
         arquivo2.write(str(casas))
         arquivo2.close()
 
