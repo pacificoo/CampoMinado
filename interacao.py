@@ -160,6 +160,7 @@ o usuario pode escolher entre as seguintes opções: Voltar
 
         Analise.grava_tempo(arquivo,0)
         Interacao.rodar_jogo(arquivo)
+
         
         
     
@@ -231,8 +232,9 @@ o usuario pode escolher entre as seguintes opções: Voltar
         while situ:
             verificacao = True
             tempo = Analise.pega_tempo(nome_arquivo)
+            tempo2 = round(time.time(),2)
             pos = Interacao.posicao(jogo.lado, nome_arquivo)
-            tempo = round(time.time(),2) - tempo
+            tempo = round(time.time(),2) + tempo - tempo2
             Analise.grava_tempo(nome_arquivo, tempo)
 
 
@@ -283,13 +285,12 @@ o usuario pode escolher entre as seguintes opções: Voltar
 
             tempos = Analise.pega_todos_os_tempos(Interacao.lista_de_jogos_ganhos())
 
-            
-            if tempo not in tempos:
-                print('Parabéns!!! Você tem um novo recorde de tempo')
-
-            elif tempo < tempos[1]:
-                print('Parabéns!!! Você tem um novo recorde de tempo. O recorde anterior era de '+ str(tempos[0]))
-
+            if len(tempos) > 0:
+                if tempo == tempos[0] and situ == True:
+                    print('Parabéns!!! Você tem um novo recorde de tempo')
+                elif tempo < tempos[0] and situ == True:
+                    print('Parabéns!!! Você tem um novo recorde de tempo. O recorde anterior era de '+ str(tempos[0]))
+    
 
             Interacao.menu_principal()
             
@@ -327,7 +328,6 @@ o usuario pode escolher entre as seguintes opções: Voltar
             Interacao.regras()
 
 
-
     def estatisticas():
         '''funcao que printa para o usuario as estatisticas dos jogos anteriores'''
         jogos = len(Interacao.lista_de_jogos())
@@ -335,21 +335,21 @@ o usuario pode escolher entre as seguintes opções: Voltar
         lista_jogos_ganhos = Interacao.lista_de_jogos_ganhos()
         tempos = Analise.pega_todos_os_tempos(Interacao.lista_de_jogos_ganhos())
         tempos_sem_ordem = Analise.pega_todos_os_tempos_sem_ordem(Interacao.lista_de_jogos_ganhos())
-        tempo_total = sum(tempos)
-        casas = Log.contagem_casas_abertas()
+        tempo_total = sum(Analise.pega_todos_os_tempos(Interacao.lista_de_jogos()))
+        casas = Log.contagem_casas_abertas(False)
 
         tempo_recorde = 'Não há tempo recorde ainda.'
         if len(tempos) >=1:
-            tempo_recorde = tempos[1]
+            tempo_recorde = tempos[0]
 
         print('\nJogos jogados: ' + str(jogos)) #jogos jogados
-        print('Tempo total jogado: ' + str(tempo_total)) #tempo total de jogos
-        print('Tempo recorde: ' + str(tempo_recorde)) #tempo recorde
+        print('Tempo total jogado: ' + str(tempo_total) + ' seg') #tempo total de jogos
+        print('Tempo recorde (em segundos): ' + str(tempo_recorde))  #tempo recorde
         print('Quantidade de jogos ganhos: '+ str(jogos_ganhos)) #jogos ganhos
-        print('Quantidade de jogos perdidos: ' + str(jogos - jogos_ganhos)) #jogos perdidos
+        print('Quantidade de jogos perdidos ou incompletos: ' + str(jogos - jogos_ganhos)) #jogos perdidos
         print('Quantidade de casas abertas: ' + str(casas)) #total de casas abertas
 
-        teste = input('\nSe você quiser visualizar o gráfico de vitórias por intervalo de tempo 1. Se quiser salvar o gráfico aperte 2.\nO gráfico será salvo na pasta data\nCaso não queira fazer nada aperte qualquer outro caracter ')
+        teste = input('\nSe você quiser visualizar o histograma de vitórias por intervalo de tempo, aperte 1. \nSe quiser salvar o histograma aperte 2.\nO gráfico será salvo na pasta data\nCaso não queira fazer nada aperte qualquer outro caracter ')
 
         if teste == '1':
             Analise.plotar_grafico(tempos_sem_ordem)
@@ -360,10 +360,10 @@ o usuario pode escolher entre as seguintes opções: Voltar
             if nome + '\n' in graficos:
                 print('Este nome já foi usado pra outro grafico. Digite outro')
             else:
-                jogos_arquivo = open("LOG\Lista de graficos.txt", 'a')
-                jogos_arquivo.write(nome + '\n')
+                graficos_arquivo = open("LOG\Lista de graficos.txt", 'a')
+                graficos_arquivo.write(nome + '\n')
                 
-                jogos_arquivo.close()
+                graficos_arquivo.close()
 
             
             Analise.salvar_grafico(tempos_sem_ordem,nome)
@@ -371,4 +371,3 @@ o usuario pode escolher entre as seguintes opções: Voltar
 
         Interacao.menu_principal()
 
-Interacao.menu_principal()
