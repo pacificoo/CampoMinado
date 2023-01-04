@@ -121,6 +121,7 @@ class Interacao:
 
         else:
             print('Não há jogos salvos')
+            Interacao.menu_principal()
     
     def novo_jogo():
         '''funcao que inicia um novo jogo
