@@ -305,7 +305,7 @@ class Interacao:
             Interacao.regras()
         
 
-    def estatisticas(dados):
+    def estatisticas():
         '''funcao que printa para o usuario as estatisticas dos jogos anteriores'''
         jogos = len(lista_de_jogos())
         jogos_ganhos = len(lista_de_jogos_ganhos())
