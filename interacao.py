@@ -13,6 +13,7 @@ class Interacao:
         Interacao.menu_principal()
     
 
+
     def Tela_pause(nome_arquivo):
         '''função em que
 o usuario pode escolher entre as seguintes opções: Voltar
@@ -71,7 +72,7 @@ o usuario pode escolher entre as seguintes opções: Voltar
     def lista_de_graficos():
         '''Retorna a lista de todos os graficos salvos
         none -> list'''
-        graficos_arquivo = open("LOG\Lista de graficos.txt")
+        graficos_arquivo = open("data\Lista de graficos.txt")
         graficos= graficos_arquivo.readlines()
         graficos_arquivo.close()
         return graficos
@@ -223,7 +224,6 @@ o usuario pode escolher entre as seguintes opções: Voltar
             return None
             
 
-        jogo.imprimir_campo() ### SOMENTE PARA TESTE ###
         jogo.imprimir_mascara()
 
         situ = True
@@ -280,7 +280,7 @@ o usuario pode escolher entre as seguintes opções: Voltar
                 
             else:
                 print('Que pena! Você perdeu o jogo.')
-            #replace (???)
+            
             print(str.format('Você completou o jogo em {} segundos.',tempo))
 
             tempos = Analise.pega_todos_os_tempos(Interacao.lista_de_jogos_ganhos())
@@ -329,7 +329,8 @@ o usuario pode escolher entre as seguintes opções: Voltar
 
 
     def estatisticas():
-        '''funcao que printa para o usuario as estatisticas dos jogos anteriores'''
+        '''funcao que printa para o usuario as estatisticas dos jogos anteriores
+        none ->none'''
         jogos = len(Interacao.lista_de_jogos())
         jogos_ganhos = len(Interacao.lista_de_jogos_ganhos())
         lista_jogos_ganhos = Interacao.lista_de_jogos_ganhos()
@@ -349,18 +350,18 @@ o usuario pode escolher entre as seguintes opções: Voltar
         print('Quantidade de jogos perdidos ou incompletos: ' + str(jogos - jogos_ganhos)) #jogos perdidos
         print('Quantidade de casas abertas: ' + str(casas)) #total de casas abertas
 
-        teste = input('\nSe você quiser visualizar o histograma de vitórias por intervalo de tempo, aperte 1. \nSe quiser salvar o histograma aperte 2.\nO gráfico será salvo na pasta data\nCaso não queira fazer nada aperte qualquer outro caracter ')
+        teste = input('\nSe você quiser visualizar o histograma de vitórias por intervalo de tempo, aperte 1. \nSe quiser salvar o histograma, aperte 2.\nO gráfico será salvo na pasta data\nCaso não queira fazer nada aperte qualquer outro caracter ')
 
         if teste == '1':
             Analise.plotar_grafico(tempos_sem_ordem)
         if teste == '2':
             graficos = Interacao.lista_de_graficos()
-            nome = input('Digite um nome para o seu gráfico' )
+            nome = input('Digite um nome para o seu gráfico ' )
 
             if nome + '\n' in graficos:
-                print('Este nome já foi usado pra outro grafico. Digite outro')
+                print('Este nome já foi usado pra outro grafico. Digite outro ')
             else:
-                graficos_arquivo = open("LOG\Lista de graficos.txt", 'a')
+                graficos_arquivo = open("data\Lista de graficos.txt", 'a')
                 graficos_arquivo.write(nome + '\n')
                 
                 graficos_arquivo.close()
