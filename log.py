@@ -66,7 +66,7 @@ class Log:
         '''Atualiza a contagem de casas abertas no LOG
         None -> int'''
         
-        arquivo = open('data\\casas abertas')
+        arquivo = open('data\casas abertas')
         try:
             casas = int(arquivo.read()) +1
         except:
