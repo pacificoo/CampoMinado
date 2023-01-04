@@ -1,4 +1,4 @@
-import numpy as np
+mport numpy as np
 import matplotlib.pyplot as plt
 from log import Log
 
@@ -51,11 +51,12 @@ class Analise:
         return tempos
 
     def plotar_grafico(tempos):
-        '''funcao que plota um infograma que relaciona o numero de vitorias com o tempo'''
+        '''funcao que plota um infograma que relaciona o numero de vitorias com o tempo
+        list->none'''
         fig, ax = plt.subplots()
         ax.set_title('Vitórias por intervalo de tempo')
         plt.xlabel('Tempo(s)')
-        cont =0
+        cont =1
         for n in tempos:
             cont+=1
         ax.set_yticks(np.arange(0,cont,1))
@@ -65,15 +66,15 @@ class Analise:
 
                 
     def salvar_grafico(tempos,nome_arquivo):
+        '''funcao que salva o grafico na pasta data
+        list,str ->none'''
         ig, ax = plt.subplots()
         ax.set_title('Vitórias por intervalo de tempo')
         plt.xlabel('Tempo(s)')
-        cont =0
+        cont =1
         for n in tempos:
             cont+=1
         ax.set_yticks(np.arange(0,cont,1))
         plt.ylabel('Número de Jogos')
         plt.hist(tempos,rwidth=1)
         plt.savefig('data\\'+nome_arquivo +'.pdf')
-    
-
