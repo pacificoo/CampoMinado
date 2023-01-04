@@ -1,3 +1,5 @@
+import time
+
 class Log:
 
     def escrever_jogo(nome_arquivo, texto = ''):
@@ -59,3 +61,24 @@ class Log:
         
         return lado_campo, campo, jogadas
 
+
+    def contagem_casas_abertas():
+        '''Atualiza a contagem de casas abertas no LOG
+        None -> int'''
+        
+        arquivo = open('data\\casas abertas')
+        try:
+            casas = int(arquivo.read()) +1
+        except:
+            print('O arquivo da quantidade de casas abertas foi corrompido.')
+            Log.escrever_erros('Log', 'Erro: O arquivo da quantidade de casas abertas foi corrompido.')
+            return 0
+            
+        arquivo.close()
+        
+        arquivo2.open('data\\casas abertas',w)
+        arquivo2.write(str(casas))
+        arquivo2.close()
+
+        return casas
+        
