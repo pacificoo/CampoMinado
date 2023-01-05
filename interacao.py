@@ -131,7 +131,9 @@ o usuario pode escolher entre as seguintes opções: Voltar
                     Log.escrever_erros('carregar_jogo','Erro: o número digitado não está entre a lista disponibilizada')
 
                 except TypeError:
-                    print('Você já venceu este jogo. Escolha outro.')
+                    print('Você já venceu este jogo.')
+                    Interacao.menu_principal()
+                    return None
                     
 
             Interacao.rodar_jogo(jogos[jogo].replace('\n',''))
@@ -371,4 +373,5 @@ o usuario pode escolher entre as seguintes opções: Voltar
 
 
         Interacao.menu_principal()
+
 
